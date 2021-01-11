@@ -48,6 +48,7 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userMapper.mapToUserDto(newUser));
+
     }
 
     @DeleteMapping("/user/{id}")

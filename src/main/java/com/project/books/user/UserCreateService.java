@@ -1,5 +1,6 @@
 package com.project.books.user;
 
+import com.project.books.exceptions.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class UserCreateService {
         String password = userDefinition.getPassword();
         String email = userDefinition.getEmail();
 
+if (email.equals(email)) {
+    throw new BadRequestException("podany email juz istnieje") ;
+
+}
+
         User user = User.builder()
                 .name(name)
                 .surname(surname)
@@ -23,6 +29,9 @@ public class UserCreateService {
                 .password(password)
                 .email(email)
                 .build();
+
+
+
         return userRepository.save(user);
     }
 
