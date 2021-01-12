@@ -21,15 +21,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(name = "name")
+//    @Column(name = "name")
     private String name;
-    @Column(name = "surname")
+//    @Column(name = "surname")
     private String surname;
-    @Column(name = "login", unique = true)
+//    @Column(name = "login", unique = true)
     private String login;
-    @Column(name = "password")
+//    @Column(name = "password")
     private String password;
-    @Column(name = "email", unique = true)
+//    @Column(name = "email", unique = true)
     private String email;
     private LocalDateTime dateOfRegistration;
 
