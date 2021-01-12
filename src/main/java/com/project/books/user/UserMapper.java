@@ -16,7 +16,7 @@ public class UserMapper {
                 .password(newUser.getPassword())
                 .email(newUser.getEmail())
                 .dateOfRegistration(newUser.getDateOfRegistration())
-                .userAddress(newUser.getUserAddress())
+                .address(newUser.getAddress())
                 .books(newUser.getBooks())
                 .bookings(newUser.getBookings())
                 .build();

@@ -1,18 +1,12 @@
 package com.project.books.user;
 
 
-import com.project.books.address.UserAddress;
+import com.project.books.address.Address;
 import com.project.books.booking.Booking;
 import com.project.books.books.Books;
 import lombok.*;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Null;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,7 +34,7 @@ public class User {
     private LocalDateTime dateOfRegistration;
 
     @ManyToOne
-    private UserAddress userAddress;
+    private Address address;
 
     @OneToMany
     @ToString.Exclude
