@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,7 +44,7 @@ public class UserController {
 
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto) {
+    ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         UserDefinition userDefinition = userMapper.mapToUserDefinition(userDto);
         User newUser = userCreateService.createUser(userDefinition);
         log.info("create new user: " + newUser);

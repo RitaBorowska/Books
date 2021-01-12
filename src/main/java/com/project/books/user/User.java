@@ -5,12 +5,15 @@ import com.project.books.address.UserAddress;
 import com.project.books.booking.Booking;
 import com.project.books.books.Books;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Null;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -24,28 +27,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @NotBlank
-    @NotEmpty
+    @Column(name = "name")
     private String name;
-
-    @NotBlank
-    @NotEmpty
+    @Column(name = "surname")
     private String surname;
-
-    @NotBlank
-    @NotEmpty
+    @Column(name = "login", unique = true)
     private String login;
-
-    @NotBlank
-    @NotEmpty
+    @Column(name = "password")
     private String password;
-
-    @Email
-    @NotBlank
-    @NotEmpty
+    @Column(name = "email", unique = true)
     private String email;
-
-    private LocalDate dateOfRegistration;
+    private LocalDateTime dateOfRegistration;
 
     @ManyToOne
     private UserAddress userAddress;
@@ -59,4 +51,5 @@ public class User {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Booking> bookings;
+
 }

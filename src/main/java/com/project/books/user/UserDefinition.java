@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 @Data
 @Builder
@@ -17,5 +20,5 @@ public class UserDefinition {
     private String login;
     private String password;
     private String email;
-//    private LocalDate dateOfRegistration;
+    private LocalDateTime dateOfRegistration;
 }
