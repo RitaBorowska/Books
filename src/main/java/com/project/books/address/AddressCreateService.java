@@ -17,6 +17,7 @@ public class AddressCreateService {
         String num = addressDefinition.getNum();
         String postcode = addressDefinition.getPostCode();
         String city = addressDefinition.getCity();
+        String region = addressDefinition.getRegion();
 
         if (street.isEmpty() || street.isBlank() || num.isEmpty() || num.isBlank()) {
             throw new BadRequest("ulica i numer domu nie mogą być puste");
@@ -24,17 +25,16 @@ public class AddressCreateService {
         if (postcode.isEmpty() || postcode.isBlank() || city.isEmpty() || city.isBlank()) {
             throw new BadRequest("kod pocztowy i nazwa miasta nie może bbyć pusta");
         }
+        if (region.isEmpty() || region.isBlank()) {
+            throw  new BadRequest("region nie może być pusty");
+        }
 
         Address address = new Address();
         address.setStreet(addressDefinition.getStreet());
         address.setNum(addressDefinition.getNum());
         address.setPostCode(addressDefinition.getPostCode());
         address.setCity(addressDefinition.getCity());
-
-        String region = addressDefinition.getRegion();
-        Optional.ofNullable(region)
-                .filter(r -> !r.isBlank())
-                .ifPresent(address::setRegion);
+        address.setRegion(addressDefinition.getRegion());
 
         return addressRepository.save(address);
 

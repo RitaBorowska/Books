@@ -24,10 +24,6 @@ public class Address {
     private String city;
     private String region;
 
-    public Optional<String> getRegion(){
-        return Optional.of(region);
-    }
-
     @OneToMany(mappedBy = "Address")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

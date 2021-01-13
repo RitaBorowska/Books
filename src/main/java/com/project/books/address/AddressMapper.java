@@ -15,7 +15,7 @@ public class AddressMapper {
                 .num(newAddress.getNum())
                 .postCode(newAddress.getPostCode())
                 .city(newAddress.getCity())
-                .region(newAddress.getRegion().orElse(null))
+                .region(newAddress.getRegion())
                 .build();
     }
 
