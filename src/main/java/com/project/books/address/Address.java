@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Builder
@@ -24,9 +23,10 @@ public class Address {
     private String city;
     private String region;
 
-    @OneToMany(mappedBy = "Address")
+    @OneToMany
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<User> users;
+
 
 }

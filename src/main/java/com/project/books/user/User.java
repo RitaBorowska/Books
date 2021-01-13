@@ -1,16 +1,14 @@
 package com.project.books.user;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.project.books.address.Address;
+import com.project.books.booking.Booking;
+import com.project.books.books.Books;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,11 +19,31 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long userId;
+    public Long id;
+
+//    @Column(name = "name")
     private String name;
+//    @Column(name = "surname")
     private String surname;
+//    @Column(name = "login", unique = true)
     private String login;
+//    @Column(name = "password")
     private String password;
-    private String address;
-    private String dateOfRegistration;
+//    @Column(name = "email", unique = true)
+    private String email;
+    private LocalDateTime dateOfRegistration;
+
+    @ManyToOne
+    private Address address;
+
+    @OneToMany
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Books> books;
+
+    @OneToMany
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Booking> bookings;
+
 }

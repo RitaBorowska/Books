@@ -4,42 +4,40 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Log4j2
 @RestController
-@Validated
+//@Validated
 public class AddressController {
 
-    public final AddressFetchService addressFetchService;
+    public final AddressService addressService;
     private final AddressMapper addressMapper;
-    private final AddressCreateService addressCreateService;
 
-    @GetMapping("/address/{id}")
+    @GetMapping("/addressid/{id}")
     AddressDto getAddressById(@PathVariable Long id) {
-        Address address = addressFetchService.fetchAddressById(id);
+        Address address = addressService.getAddressById(id);
         return addressMapper.mapToAddressDto(address);
     }
 
     @PostMapping("/address")
-    ResponseEntity<AddressDto> createAddress(@RequestBody @Valid AddressDto addressDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    ResponseEntity<AddressDto> createAddress(@RequestBody AddressDto addressDto) {
         AddressDefinition addressDefinition = addressMapper.mapToAddressDefinition(addressDto);
-        Address newAddress = addressCreateService.createAddress(addressDefinition);
+        Address newAddress = addressService.createAddress(addressDefinition);
         log.info("create address: " + newAddress);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(addressMapper.mapToAddressDto(newAddress));
     }
 
-    @GetMapping("/sddresses")
+    @GetMapping("/addresses")
     List<AddressDto> getAllAddresses() {
-        return addressFetchService.fetchAllAddresses()
+        return addressService.getAllAddresses()
                 .stream()
                 .map(addressMapper::mapToAddressDto)
                 .collect(Collectors.toList());
@@ -48,7 +46,7 @@ public class AddressController {
 
     @DeleteMapping("/address/{id}")
     public  void  deleteById ( @PathVariable  Long  id ) {
-        addressFetchService . deleteById (id);
+        addressService. deleteById (id);
     }
 
 }
