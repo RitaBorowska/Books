@@ -1,5 +1,7 @@
 package com.project.books.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.project.books.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -50,8 +52,21 @@ public class UserController {
 
     }
 
+    @PatchMapping("/updateuser/{id}")
+    public ResponseEntity<UserDto> updateUser (@RequestBody UserDto userDto, @PathVariable Long id) {
+    UserDefinition userDefinition = userMapper.mapToUserDefinition(userDto);
+        User user = userService.updateUser(id);
+        log.info("zmien dane uzytkownika o id: " + id );
+        if(user == null) {
+            throw new NotFoundException("uzytkownik o id: " + id + "nie istnieje");
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/user/{id}")
     public void deleteById(@PathVariable Long id){
         userService.deleteById(id);
     }
+
+
 }

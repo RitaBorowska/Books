@@ -1,16 +1,18 @@
 package com.project.books.user;
 
+import com.project.books.WebSecurityConfig;
 import com.project.books.exceptions.BadRequestException;
 import com.project.books.exceptions.NotFoundException;
+import com.project.books.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +22,7 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User getUserById(Long id) {
         return userRepository.findById(id)
@@ -82,6 +85,22 @@ public class UserService {
                 .build();
         return userRepository.save(user);
     }
+
+    public User updateUser(Long id) {
+        User userToUpdate = returnUserIfExistsById(id);
+//        userToUpdate.setName(user.getName());
+//        userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(userToUpdate);
+    }
+
+    private User returnUserIfExistsById(Long id) {
+        Optional<User> userById = userRepository.findById(id);
+        if (userById.isEmpty()) {
+            throw new ResourceNotFoundException("Uzytkownik o id: {" + id + "} nie odnaleziono");
+        } else
+            return userById.get();
+    }
+
 
     private boolean mailChecker(String email) {
         Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
