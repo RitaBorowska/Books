@@ -1,12 +1,10 @@
 package com.project.books.user;
 
-import com.project.books.WebSecurityConfig;
 import com.project.books.exceptions.BadRequestException;
 import com.project.books.exceptions.NotFoundException;
 import com.project.books.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,7 +20,6 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User getUserById(Long id) {
         return userRepository.findById(id)
@@ -41,7 +38,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User createUser(  UserDefinition userDefinition) {
+    public User createUser(UserDefinition userDefinition) {
 
         String name = userDefinition.getName();
         String surname = userDefinition.getSurname();
@@ -64,7 +61,7 @@ public class UserService {
 //        if (userRepository.findByLogin(userDefinition.getLogin()) != null){
 //            throw new UserAlredyExists("Użytkownik z podanym loginem już istnieje");
 //        }
-        if (password.length() < 5) {
+        if (password.length() < 5 ) {
             throw new BadRequestException("Hasło musi zawierać conajmniej 5 dowolnych znaków");
         }
         if (email.isBlank() || email.isEmpty()){
@@ -86,11 +83,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id) {
-        User userToUpdate = returnUserIfExistsById(id);
-//        userToUpdate.setName(user.getName());
-//        userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(userToUpdate);
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 
     private User returnUserIfExistsById(Long id) {

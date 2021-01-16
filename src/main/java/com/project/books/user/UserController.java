@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -51,17 +52,10 @@ public class UserController {
                 .body(userMapper.mapToUserDto(newUser));
 
     }
-
-    @PatchMapping("/updateuser/{id}")
-    public ResponseEntity<UserDto> updateUser (@RequestBody UserDto userDto, @PathVariable Long id) {
-    UserDefinition userDefinition = userMapper.mapToUserDefinition(userDto);
-        User user = userService.updateUser(id);
-        log.info("zmien dane uzytkownika o id: " + id );
-        if(user == null) {
-            throw new NotFoundException("uzytkownik o id: " + id + "nie istnieje");
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+    @PutMapping("/updateuser")
+    public User updateUser(@RequestBody User user){
+        return userService.updateUser(user);
+   }
 
     @DeleteMapping("/user/{id}")
     public void deleteById(@PathVariable Long id){

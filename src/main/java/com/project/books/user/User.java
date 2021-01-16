@@ -46,4 +46,7 @@ public class User {
     @EqualsAndHashCode.Exclude
     private List<Booking> bookings;
 
+    public boolean isPresent() {
+        return false;
+    }
 }
