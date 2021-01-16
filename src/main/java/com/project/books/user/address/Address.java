@@ -1,4 +1,4 @@
-package com.project.books.address;
+package com.project.books.user.address;
 
 import com.project.books.user.User;
 import lombok.*;
@@ -23,10 +23,10 @@ public class Address {
     private String city;
     private String region;
 
-    @OneToMany
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private List<User> users;
+//    @OneToMany
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private List<User> users;
 
 
 }

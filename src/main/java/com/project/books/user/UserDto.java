@@ -1,15 +1,14 @@
 package com.project.books.user;
 
-import com.project.books.address.Address;
+import com.project.books.user.address.Address;
 import com.project.books.booking.Booking;
 import com.project.books.books.Books;
+import com.project.books.user.role.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,14 +24,19 @@ public class UserDto {
 //    @NotNull
     private String surname;
 //    @NotNull
+//    @UniqueElements
     private String login;
 //    @NotNull
     private String password;
-//    @Email(message = "nie pooprawny format email")
+//    @Email(message = "nie poprawny format email")
     private String email;
+
+//    @NotBlank
+//    private UserRole userRole;
 
     private LocalDateTime dateOfRegistration;
     private Address address;
     private List<Books> books;
     private List<Booking> bookings;
+
 }

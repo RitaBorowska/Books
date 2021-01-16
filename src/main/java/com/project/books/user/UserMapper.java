@@ -22,13 +22,4 @@ public class UserMapper {
                 .build();
     }
 
-    UserDefinition mapToUserDefinition(UserDto userDto){
-        return  UserDefinition.builder()
-                .name(userDto.getName())
-                .surname(userDto.getSurname())
-                .login(userDto.getLogin())
-                .password(userDto.getPassword())
-                .email(userDto.getEmail())
-                .build();
-    }
 }

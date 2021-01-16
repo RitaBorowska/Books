@@ -21,12 +21,25 @@ public class UserController {
     private final UserMapper userMapper;
     private final UserService userService;
 
+    @PostMapping("/user")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto createUser(@RequestBody UserDto userDto) {
+        return userService.createUser(userDto);
+
+    }
+
     @GetMapping("/users")
     List<UserDto> getAllUser(){
         return userService.getAllUsers()
                 .stream()
                 .map(userMapper :: mapToUserDto)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/users/{userId}/roles/{role}")
+    public UserDto addRoleToUser(@PathVariable Long id, @PathVariable String role) {
+        final User user = userService.getUserById(id);
+        return userService.changeRole(user, role);
     }
 
     @GetMapping("/userid/{id}")
@@ -41,17 +54,6 @@ public class UserController {
         return userMapper.mapToUserDto(user);
     }
 
-    @PostMapping("/user")
-    @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        UserDefinition userDefinition = userMapper.mapToUserDefinition(userDto);
-        User newUser = userService.createUser(userDefinition);
-        log.info("create new user: " + newUser);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(userMapper.mapToUserDto(newUser));
-
-    }
     @PutMapping("/updateuser")
     public User updateUser(@RequestBody User user){
         return userService.updateUser(user);
@@ -61,6 +63,5 @@ public class UserController {
     public void deleteById(@PathVariable Long id){
         userService.deleteById(id);
     }
-
 
 }

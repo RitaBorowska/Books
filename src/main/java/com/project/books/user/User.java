@@ -1,9 +1,10 @@
 package com.project.books.user;
 
 
-import com.project.books.address.Address;
+import com.project.books.user.address.Address;
 import com.project.books.booking.Booking;
 import com.project.books.books.Books;
+import com.project.books.user.role.UserRole;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,8 +34,13 @@ public class User {
     private String email;
     private LocalDateTime dateOfRegistration;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Address address;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToOne
+    private UserRole userRole;
 
     @OneToMany
     @ToString.Exclude
@@ -46,7 +52,4 @@ public class User {
     @EqualsAndHashCode.Exclude
     private List<Booking> bookings;
 
-    public boolean isPresent() {
-        return false;
-    }
 }
